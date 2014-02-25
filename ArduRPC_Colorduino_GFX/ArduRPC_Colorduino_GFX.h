@@ -18,8 +18,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ARDURPCHANDLERS_H
-#define ARDURPCHANDLERS_H
+#ifndef ARDURPC_COLORDUINO_GFX_H
+#define ARDURPC_COLORDUINO_GFX_H
 
 #include <avr/pgmspace.h>
 
