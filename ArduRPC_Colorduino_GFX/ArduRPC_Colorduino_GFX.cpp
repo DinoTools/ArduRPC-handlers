@@ -248,28 +248,13 @@ uint8_t ArduRPC_Colorduino_GFX_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args)
       rpc->getParam_uint8()
     );
   } else if(cmd_id == 0x51) {
-    // ToDo
-    /*
-    panel->drawBitmap(
-      rpc->getParam_int16(),
-      rpc->getParam_int16(),
-      //(uint8_t *)data[0],
-      rpc->getParam_int16(),
-      rpc->getParam_int16(),
-      panel->color(
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8()
-      )
-    );*/
-  } else if(cmd_id == 0xA0) {
     if(rpc->getParam_uint8() == 1) {
       panel->swapBuffers(true);
     } else {
       panel->swapBuffers(false);
     }
     return RPC_RETURN_SUCCESS;
-  } else if(cmd_id == 0xA1) {
+  } else if(cmd_id == 0x52) {
     options->auto_swap = rpc->getParam_uint8();
     return RPC_RETURN_SUCCESS;
   } else {
@@ -284,6 +269,6 @@ rpc_handler_t get_ArduRPC_Colorduino_GFX_Wrapper(ColorduinoPanel &panel)
   struct ArduRPC_Colorduino_GFX_options *options = (struct ArduRPC_Colorduino_GFX_options *)malloc(sizeof(struct ArduRPC_Colorduino_GFX_options));
   options->auto_swap = 1;
   options->panel = &panel;
-  rpc_handler_t h = {0x0281, (void *)ArduRPC_Colorduino_GFX_Wrapper, (void *)options};
+  rpc_handler_t h = {0x0280, (void *)ArduRPC_Colorduino_GFX_Wrapper, (void *)options};
   return h;
 }
