@@ -22,6 +22,14 @@
 
 uint8_t ArduRPC_Colorduino_GFX_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args)
 {
+  uint16_t x;
+  uint16_t y;
+  uint8_t width;
+  uint8_t height;
+  uint8_t tmp_u8;
+  uint16_t tmp_u16;
+  uint8_t i, j;
+
   struct ArduRPC_Colorduino_GFX_options *options = (struct ArduRPC_Colorduino_GFX_options *)args;
   ColorduinoPanel *panel = (ColorduinoPanel*)options->panel;
 
@@ -257,6 +265,57 @@ uint8_t ArduRPC_Colorduino_GFX_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args)
   } else if(cmd_id == 0x52) {
     options->auto_swap = rpc->getParam_uint8();
     return RPC_RETURN_SUCCESS;
+  } else if(cmd_id == 0x60) {
+    x = rpc->getParam_int16();
+    y = rpc->getParam_int16();
+    width = rpc->getParam_uint8();
+    height = rpc->getParam_uint8();
+    tmp_u8 = rpc->getParam_uint8();
+    if (tmp_u8 == 0) {
+      for(i = 0; i < height; i++) {
+        for(j = 0; j < width; j++) {
+          tmp_u8 = rpc->getParam_uint8();
+          panel->drawPixel(
+            x + j,
+            y + i,
+            panel->color(
+              ((tmp_u8 & 0b11000000) >> 6) * 85,
+              ((tmp_u8 & 0b00111000) >> 3) * 36,
+              (tmp_u8 & 0b00000111) * 36
+            )
+          );
+        }
+      }
+    } else if (tmp_u8 == 1) {
+      for(i = 0; i < height; i++) {
+        for(j = 0; j < width; j++) {
+          tmp_u16 = rpc->getParam_uint16();
+          panel->drawPixel(
+            x + j,
+            y + i,
+            panel->color(
+              ((tmp_u16 & 0b1111100000000000) >> 11) * 8,
+              ((tmp_u16 & 0b0000011111100000) >> 5) * 4,
+              ((tmp_u16 & 0b0000000000011111)) * 8
+            )
+          );
+        }
+      }
+    } else if (tmp_u8 == 2) {
+      for(i = 0; i < height; i++) {
+        for(j = 0; j < width; j++) {
+          panel->drawPixel(
+            x + j,
+            y + i,
+            panel->color(
+              rpc->getParam_uint8(),
+              rpc->getParam_uint8(),
+              rpc->getParam_uint8()
+            )
+          );
+        }
+      }
+    }
   } else {
     return RPC_RETURN_COMMAND_NOT_FOUND;
   }
