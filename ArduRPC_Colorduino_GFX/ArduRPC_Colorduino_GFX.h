@@ -33,14 +33,15 @@
  #include <pins_arduino.h>
 #endif
 
-struct ArduRPC_Colorduino_GFX_options {
-  ColorduinoPanel *panel;
-  uint8_t auto_swap;
+class ArduRPC_Colorduino_GFX : public ArduRPCHandler
+{
+  public:
+    ArduRPC_Colorduino_GFX(ArduRPC &rpc, char *name, ColorduinoPanel &panel);
+    uint8_t
+      call(uint8_t);
+  private:
+    ColorduinoPanel *panel;
+    uint8_t auto_swap;
 };
-
-uint8_t ArduRPC_Colorduino_GFX_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args);
-
-rpc_handler_t get_ArduRPC_Colorduino_GFX_Wrapper(ColorduinoPanel &panel);
-
 
 #endif
