@@ -20,57 +20,53 @@
 
 #include "ArduRPC_Adafruit_DHT.h"
 
-uint8_t ArduRPC_Adafruit_DHT_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args)
+ArduRPC_Adafruit_DHT::ArduRPC_Adafruit_DHT(ArduRPC &rpc, char *name, DHT &sensor, uint8_t sensor_type) : ArduRPCHandler()
 {
-  struct ArduRPC_Adafruit_DHT_options *options = (struct ArduRPC_Adafruit_DHT_options *)args;
-  DHT *sensor = (DHT*)options->sensor;
-  uint8_t type = options->type;
+  this->type = 0x0403;
+  this->registerSelf(rpc, name, (void *)this);
 
+  this->sensor = &sensor;
+  this->sensor_type = sensor_type;
+}
+
+uint8_t ArduRPC_Adafruit_DHT::call(uint8_t cmd_id)
+{
   if(cmd_id == 0x11) {
-    if(type == DHT11)
-      rpc->writeResult_float(0.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(0.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x12) {
-    if(type == DHT11)
-      rpc->writeResult_float(50.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(50.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x13) {
-    if(type == DHT11)
-      rpc->writeResult_float(2.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(2.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x14) {
-    rpc->writeResult_float(sensor->readTemperature());
+    this->_rpc->writeResult_float(sensor->readTemperature());
   } else if(cmd_id == 0x21) {
-    if(type == DHT11)
-      rpc->writeResult_float(20.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(20.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x22) {
-    if(type == DHT11)
-      rpc->writeResult_float(80.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(80.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x23) {
-    if(type == DHT11)
-      rpc->writeResult_float(5.0f);
+    if(this->sensor_type == DHT11)
+      this->_rpc->writeResult_float(5.0f);
     else
-      rpc->writeResult_float(NAN);
+      this->_rpc->writeResult_float(NAN);
   } else if(cmd_id == 0x24) {
-    rpc->writeResult_float(sensor->readHumidity());
+    this->_rpc->writeResult_float(sensor->readHumidity());
   } else {
     return RPC_RETURN_COMMAND_NOT_FOUND;
   }
   return RPC_RETURN_SUCCESS;
-}
-
-rpc_handler_t get_ArduRPC_Adafruit_DHT_Wrapper(DHT &sensor, uint8_t type)
-{
-  struct ArduRPC_Adafruit_DHT_options *options = (struct ArduRPC_Adafruit_DHT_options *)malloc(sizeof(struct ArduRPC_Adafruit_DHT_options));
-  options->type = type;
-  options->sensor = &sensor;
-  rpc_handler_t h = {0x0403, (void *)ArduRPC_Adafruit_DHT_Wrapper, (void *)options};
-  return h;
 }

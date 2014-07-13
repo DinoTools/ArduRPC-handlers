@@ -18,8 +18,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ARDURPC_DHT_H
-#define ARDURPC_DHT_H
+#ifndef ARDURPC_ADAFRUIT_DHT_H
+#define ARDURPC_ADAFRUIT_DHT_H
 
 #include <avr/pgmspace.h>
 
@@ -33,13 +33,17 @@
  #include <pins_arduino.h>
 #endif
 
-struct ArduRPC_Adafruit_DHT_options {
-  DHT *sensor;
-  uint8_t type;
+class ArduRPC_Adafruit_DHT : public ArduRPCHandler
+{
+  public:
+    ArduRPC_Adafruit_DHT(ArduRPC &rpc, char *name, DHT &sensor, uint8_t sensor_type);
+    uint8_t
+      call(uint8_t);
+  private:
+    DHT
+      *sensor;
+    uint8_t
+      sensor_type;
 };
-
-uint8_t ArduRPC_Adafruit_DHT_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args);
-
-rpc_handler_t get_ArduRPC_Adafruit_DHT_Wrapper(DHT &sensor, uint8_t type);
 
 #endif
