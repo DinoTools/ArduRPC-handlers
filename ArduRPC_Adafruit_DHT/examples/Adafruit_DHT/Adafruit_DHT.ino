@@ -26,7 +26,7 @@
 // Create a new rpc instance
 ArduRPC rpc = ArduRPC(RPC_NUM_HANDLERS, RPC_NUM_FUNCTIONS);
 // Create a new instance of the ArduRPC serial protocol handler
-ArduRPCSerial rpc_serial = ArduRPCSerial(RPC_SERIAL_PORT, rpc);
+ArduRPC_Serial rpc_serial = ArduRPC_Serial(RPC_SERIAL_PORT, rpc);
 
 // Create a new DHT instance
 DHT dht(DHTPIN, DHTTYPE);
