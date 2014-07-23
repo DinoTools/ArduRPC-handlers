@@ -20,38 +20,43 @@
 
 #include "ArduRPC_Adafruit_NeoPixel.h"
 
-uint8_t ArduRPC_Adafruit_NeoPixel_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args)
+ArduRPC_Adafruit_NeoPixel::ArduRPC_Adafruit_NeoPixel(ArduRPC &rpc, char *name, Adafruit_NeoPixel &strip) : ArduRPCHandler()
+{
+  this->type = 0x0181;
+  this->registerSelf(rpc, name, (void *)this);
+
+  this->strip = &strip;
+}
+
+uint8_t ArduRPC_Adafruit_NeoPixel::call(uint8_t cmd_id)
 {
   uint32_t color;
   uint16_t start;
   uint16_t end;
   uint16_t i;
 
-  struct ArduRPC_Adafruit_NeoPixel_options *options = (struct ArduRPC_Adafruit_NeoPixel_options *)args;
-  Adafruit_NeoPixel *strip = (Adafruit_NeoPixel*)options->strip;
-
   if (cmd_id == 0x01) {
-    rpc->writeResult_uint8(3);
+    this->_rpc->writeResult_uint8(3);
     return RPC_RETURN_SUCCESS;
   } else if (cmd_id == 0x02) {
-    rpc->writeResult_uint16(strip->numPixels());
+    this->_rpc->writeResult_uint16(this->strip->numPixels());
     return RPC_RETURN_SUCCESS;
   } else if (cmd_id == 0x11) {
-    strip->setPixelColor(
-      rpc->getParam_uint16(),
-      strip->Color(
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8()
+    this->strip->setPixelColor(
+      this->_rpc->getParam_uint16(),
+      this->strip->Color(
+        this->_rpc->getParam_uint8(),
+        this->_rpc->getParam_uint8(),
+        this->_rpc->getParam_uint8()
       )
     );
   } else if (cmd_id == 0x12) {
-    start = rpc->getParam_uint16();
-    end = rpc->getParam_uint16();
-    color = strip->Color(
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8(),
-        rpc->getParam_uint8()
+    start = this->_rpc->getParam_uint16();
+    end = this->_rpc->getParam_uint16();
+    color = this->strip->Color(
+        this->_rpc->getParam_uint8(),
+        this->_rpc->getParam_uint8(),
+        this->_rpc->getParam_uint8()
     );
 
     if (start > end) {
@@ -61,17 +66,9 @@ uint8_t ArduRPC_Adafruit_NeoPixel_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *ar
     }
 
     for (i = start; i < end; i++) {
-      strip->setPixelColor(i, color);
+      this->strip->setPixelColor(i, color);
     }
   }
-  strip->show();
+  this->strip->show();
   return RPC_RETURN_SUCCESS;
-}
-
-rpc_handler_t get_ArduRPC_Adafruit_NeoPixel_Wrapper(Adafruit_NeoPixel &strip)
-{
-  struct ArduRPC_Adafruit_NeoPixel_options *options = (struct ArduRPC_Adafruit_NeoPixel_options *)malloc(sizeof(struct ArduRPC_Adafruit_NeoPixel_options));
-  options->strip = &strip;
-  rpc_handler_t h = {0x0181, (void *)ArduRPC_Adafruit_NeoPixel_Wrapper, (void *)options};
-  return h;
 }

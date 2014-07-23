@@ -33,12 +33,14 @@
 #include "ArduRPC.h"
 #include <Adafruit_NeoPixel.h>
 
-struct ArduRPC_Adafruit_NeoPixel_options {
-  Adafruit_NeoPixel *strip;
+class ArduRPC_Adafruit_NeoPixel : public ArduRPCHandler
+{
+  public:
+    ArduRPC_Adafruit_NeoPixel(ArduRPC &rpc, char *name, Adafruit_NeoPixel &strip);
+    uint8_t
+      call(uint8_t);
+  private:
+    Adafruit_NeoPixel *strip;
 };
-
-uint8_t ArduRPC_Adafruit_NeoPixel_Wrapper(uint8_t cmd_id, ArduRPC *rpc, void *args);
-
-rpc_handler_t get_ArduRPC_Adafruit_NeoPixel_Wrapper(Adafruit_NeoPixel &strip);
 
 #endif
