@@ -3,18 +3,18 @@
  *
  * Requirements:
  * - DHT - https://github.com/adafruit/DHT-sensor-library
- * - ArduRPC
+ * - ArduRPC - https://github.com/DinoTools/ArduRPC
  * - ArduRPC_Adafruit_DHT - https://github.com/DinoTools/ArduRPC-handlers 
  */
+
+// Include Required libs
 #include <DHT.h>
-
-#define DHTPIN 2
-#define DHTTYPE DHT22
-
-DHT dht(DHTPIN, DHTTYPE);
-
 #include <ArduRPC.h>
 #include <ArduRPC_Adafruit_DHT.h>
+
+// Define some values
+#define DHTPIN 2
+#define DHTTYPE DHT22
 
 #define RPC_NUM_HANDLERS 3
 #define RPC_NUM_FUNCTIONS 0
@@ -23,20 +23,25 @@ DHT dht(DHTPIN, DHTTYPE);
 #define RPC_SERIAL_PORT Serial
 #define RPC_SERIAL_BAUD 9600
 
+// Create a new rpc instance
 ArduRPC rpc = ArduRPC(RPC_NUM_HANDLERS, RPC_NUM_FUNCTIONS);
+// Create a new instance of the ArduRPC serial protocol handler
 ArduRPCSerial rpc_serial = ArduRPCSerial(RPC_SERIAL_PORT, rpc);
 
+// Create a new DHT instance
+DHT dht(DHTPIN, DHTTYPE);
+// Create a new ArduRPC wrapper for the DHT and name it 'sensor'
+ArduRPC_Adafruit_DHT Adafruit_DHT_Wrapper(rpc, "sensor", dht, DHTTYPE));
+
 void setup() {
-  uint8_t handler_id;
-  
+  // Initialize the serial port
   RPC_SERIAL_PORT.begin(RPC_SERIAL_BAUD);
 
+  // Initialize the DHT sensor.
   dht.begin();
-
-  handler_id = rpc.connectHandler(get_ArduRPC_Adafruit_DHT_Wrapper(dht, DHTTYPE));
-  rpc.setHandlerName(handler_id, "dht");
 }
 
 void loop() {
+  // Process data
   rpc_serial.readData();
 }
