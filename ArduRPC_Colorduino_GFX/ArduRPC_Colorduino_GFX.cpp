@@ -57,7 +57,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x20) {
+  } else if(cmd_id == 0x21) {
     this->panel->drawLine(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -69,7 +69,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x21) {
+  } else if(cmd_id == 0x22) {
     this->panel->drawFastVLine(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -80,7 +80,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x22) {
+  } else if(cmd_id == 0x23) {
     this->panel->drawFastHLine(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -91,7 +91,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x23) {
+  } else if(cmd_id == 0x24) {
     this->panel->drawRect(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -103,7 +103,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x24) {
+  } else if(cmd_id == 0x25) {
     this->panel->fillRect(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -115,7 +115,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x25) {
+  } else if(cmd_id == 0x26) {
     this->panel->fillScreen(
       this->panel->color(
         this->_rpc->getParam_uint8(),
@@ -123,9 +123,9 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x26) {
+  } else if(cmd_id == 0x27) {
     // ToDo
-  } else if(cmd_id == 0x30) {
+  } else if(cmd_id == 0x31) {
     this->panel->drawCircle(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -136,7 +136,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x31) {
+  } else if(cmd_id == 0x32) {
     this->panel->fillCircle(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -147,7 +147,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x32) {
+  } else if(cmd_id == 0x33) {
     this->panel->drawTriangle(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -161,7 +161,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x33) {
+  } else if(cmd_id == 0x34) {
     this->panel->fillTriangle(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -175,7 +175,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x34) {
+  } else if(cmd_id == 0x35) {
     this->panel->drawRoundRect(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -188,7 +188,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x35) {
+  } else if(cmd_id == 0x36) {
     this->panel->fillRoundRect(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -201,7 +201,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x40) {
+  } else if(cmd_id == 0x41) {
     this->panel->drawChar(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16(),
@@ -218,12 +218,12 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
       ),
       this->_rpc->getParam_uint8()
     );
-  } else if(cmd_id == 0x41) {
+  } else if(cmd_id == 0x42) {
     this->panel->setCursor(
       this->_rpc->getParam_int16(),
       this->_rpc->getParam_int16()
     );
-  } else if(cmd_id == 0x42) {
+  } else if(cmd_id == 0x43) {
     this->panel->setTextColor(
       this->panel->color(
         this->_rpc->getParam_uint8(),
@@ -231,7 +231,7 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x43) {
+  } else if(cmd_id == 0x44) {
     this->panel->setTextColor(
       this->panel->color(
         this->_rpc->getParam_uint8(),
@@ -244,33 +244,33 @@ uint8_t ArduRPC_Colorduino_GFX::call(uint8_t cmd_id)
         this->_rpc->getParam_uint8()
       )
     );
-  } else if(cmd_id == 0x44) {
+  } else if(cmd_id == 0x45) {
     this->panel->setTextSize(
       this->_rpc->getParam_uint8()
     );
-  } else if(cmd_id == 0x45) {
+  } else if(cmd_id == 0x46) {
     this->panel->setTextWrap(
       this->_rpc->getParam_uint8()
     );
-  } else if(cmd_id == 0x46) {
+  } else if(cmd_id == 0x47) {
     this->panel->write(
       this->_rpc->getParam_uint8()
     );
-  } else if(cmd_id == 0x50) {
+  } else if(cmd_id == 0x51) {
     this->panel->setRotation(
       this->_rpc->getParam_uint8()
     );
-  } else if(cmd_id == 0x51) {
+  } else if(cmd_id == 0x52) {
     if(this->_rpc->getParam_uint8() == 1) {
       this->panel->swapBuffers(true);
     } else {
       this->panel->swapBuffers(false);
     }
     return RPC_RETURN_SUCCESS;
-  } else if(cmd_id == 0x52) {
+  } else if(cmd_id == 0x53) {
     this->auto_swap = this->_rpc->getParam_uint8();
     return RPC_RETURN_SUCCESS;
-  } else if(cmd_id == 0x60) {
+  } else if(cmd_id == 0x61) {
     x = this->_rpc->getParam_int16();
     y = this->_rpc->getParam_int16();
     width = this->_rpc->getParam_uint8();
