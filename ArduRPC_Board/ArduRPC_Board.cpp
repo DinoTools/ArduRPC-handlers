@@ -22,8 +22,7 @@
 
 ArduRPC_Board::ArduRPC_Board(ArduRPC &rpc, char *name, uint8_t num_analog_input, uint8_t num_digital_input, uint8_t num_digital_output, uint8_t num_pwm_output) : ArduRPCHandler()
 {
-  // ToDo; Change this
-  this->type = 0xff01;
+  this->type = 0x0501;
   this->registerSelf(rpc, name, (void *)this);
 
   this->num_analog_input = num_analog_input;
