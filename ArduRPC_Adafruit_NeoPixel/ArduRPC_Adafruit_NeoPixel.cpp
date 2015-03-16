@@ -1,6 +1,6 @@
 /**
  * Arduino Remote Procedure Calls - ArduRPC
- * Copyright (C) 2013-2014 DinoTools
+ * Copyright (C) 2013-2015 DinoTools
  *
  * This file is part of ArduRPC.
  *
@@ -35,6 +35,9 @@ uint8_t ArduRPC_Adafruit_NeoPixel::call(uint8_t cmd_id)
   uint16_t end;
   uint16_t i;
 
+  /* Color */
+  uint8_t r, g, b;
+
   if (cmd_id == 0x01) {
     this->_rpc->writeResult_uint8(3);
     return RPC_RETURN_SUCCESS;
@@ -42,22 +45,26 @@ uint8_t ArduRPC_Adafruit_NeoPixel::call(uint8_t cmd_id)
     this->_rpc->writeResult_uint16(this->strip->numPixels());
     return RPC_RETURN_SUCCESS;
   } else if (cmd_id == 0x11) {
-    this->strip->setPixelColor(
-      this->_rpc->getParam_uint16(),
-      this->strip->Color(
-        this->_rpc->getParam_uint8(),
-        this->_rpc->getParam_uint8(),
-        this->_rpc->getParam_uint8()
-      )
-    );
+    /* Pixel position */
+    i = this->_rpc->getParam_uint16();
+
+    /* Color */
+    r = this->_rpc->getParam_uint8();
+    g = this->_rpc->getParam_uint8();
+    b = this->_rpc->getParam_uint8();
+    color = this->strip->Color(r, g, b);
+
+    this->strip->setPixelColor(i, color);
   } else if (cmd_id == 0x12) {
+    /* Pixel position */
     start = this->_rpc->getParam_uint16();
     end = this->_rpc->getParam_uint16();
-    color = this->strip->Color(
-        this->_rpc->getParam_uint8(),
-        this->_rpc->getParam_uint8(),
-        this->_rpc->getParam_uint8()
-    );
+
+    /* Color */
+    r = this->_rpc->getParam_uint8();
+    g = this->_rpc->getParam_uint8();
+    b = this->_rpc->getParam_uint8();
+    color = this->strip->Color(r, g, b);
 
     if (start > end) {
       i = end;
